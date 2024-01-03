@@ -1,6 +1,6 @@
 import { collection } from 'firebase/firestore';
 import { addDoc, serverTimestamp } from 'firebase/firestore';
-export const useAddTodo = async () => {
+export const useAddTodo = async (todo: Todo) => {
   const db = useFirestore();
   try {
     const ref = collection(db, 'todos');
