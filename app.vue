@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const db = useFirestore()
+console.log('db',db)
 </script>
 
 <style>
