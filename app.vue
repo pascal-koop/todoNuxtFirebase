@@ -2,7 +2,6 @@
 
 import type { Todo } from '~/types/todo';
 
-
 let newTodo: Todo = {
 id: '1',
 title: 'new todo',
@@ -11,17 +10,23 @@ priority: 1,
 createdAt: new Date(),
 updatedAt: new Date(),
 };
-
+let password = 'password';
+let email = 'pascale.koop@live.com';
 const addTodo = async(todo: Todo) => {
  try {
   const response = await useAddTodo(todo)
  } catch (error) {
    console.log(error)
  }
-
 };
 
-addTodo(newTodo);
+const createNewUser = async(email: string, password: string) => {
+  try {
+    const response = await useCreateNewUser(email, password)
+  } catch (error) {
+    console.log(error)
+  }
+};
 </script>
 
 <style>
@@ -29,6 +34,6 @@ addTodo(newTodo);
 
 <template>
   <div>
-    <NuxtWelcome />
+  <button @click="createNewUser(email, password)"> send</button>
   </div>
 </template>
