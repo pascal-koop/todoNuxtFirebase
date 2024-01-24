@@ -13,7 +13,6 @@ watchEffect(() => {
       const uid = user.uid;
     } else {
       console.log(('no user'))
-
     }
   });
 })
@@ -27,7 +26,7 @@ createdAt: new Date(),
 updatedAt: new Date(),
 };
 let password = 'password';
-let email = 'pascale.koop@live.com';
+let email = 'pascale@live.com';
 const addTodo = async(todo: Todo) => {
  try {
   const response = await useAddTodo(todo)
