@@ -26,7 +26,7 @@ createdAt: new Date(),
 updatedAt: new Date(),
 };
 let password = 'password';
-let email = 'pascale@live.com';
+let email = 'pascale.koop@live.com';
 const addTodo = async(todo: Todo) => {
  try {
   const response = await useAddTodo(todo)
@@ -61,11 +61,10 @@ const signout = async() => {
   }
 };
 
-const login = async(email: string, password: string) => {
+const login = async (email: string, password: string) => {
   try {
     const response = await useLogin(email, password)
     console.log(response)
-    user.value = response?.user
   } catch (error) {
     console.log(error)
   }

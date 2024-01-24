@@ -1,12 +1,13 @@
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-
 export const useLogin = async (email: string, password: string) => {
-  const auth = getAuth();
   try {
-    if (auth) {
-      const response = await signInWithEmailAndPassword(auth, email, password);
-      return response;
-    }
+    const { status, pending, data } = useFetch('api/login', {
+      method: 'POST',
+      body: {
+        email,
+        password,
+      },
+    });
+    return { status, pending, data };
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error);
