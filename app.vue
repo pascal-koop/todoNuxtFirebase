@@ -14,7 +14,7 @@ updatedAt: new Date(),
 
 const addTodo = async(todo: Todo) => {
  try {
-  const re = await useAddTodo(todo)
+  const response = await useAddTodo(todo)
  } catch (error) {
    console.log(error)
  }
