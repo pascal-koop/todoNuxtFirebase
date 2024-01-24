@@ -1,11 +1,11 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { useFirebaseAuth } from 'vuefire';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 
 export const useCreateNewUser = async (email: string, password: string) => {
-  const auth = useFirebaseAuth();
+  const auth = getAuth();
   try {
     if (auth) {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const response = await createUserWithEmailAndPassword(auth, email, password);
+      return response;
     }
   } catch (error) {
     // eslint-disable-next-line no-console
