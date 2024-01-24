@@ -7,6 +7,7 @@ const user = ref()
 watchEffect(() => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      console.log(('logged in'))
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/auth.user
       const uid = user.uid;
@@ -60,6 +61,16 @@ const signout = async() => {
     console.log(error)
   }
 };
+
+const login = async(email: string, password: string) => {
+  try {
+    const response = await useLogin(email, password)
+    console.log(response)
+    user.value = response?.user
+  } catch (error) {
+    console.log(error)
+  }
+};
 </script>
 
 <style>
@@ -70,4 +81,5 @@ const signout = async() => {
   <br>
   <button @click="signout"> signout</button>
   <br>
+  <button @click="login(email, password)"> login</button>
 </template>
