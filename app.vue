@@ -72,13 +72,6 @@ const login = async(email: string, password: string) => {
 };
 </script>
 
-<style>
-</style>
-
 <template>
-  <button @click="createNewUser(email, password)"> send</button>
-  <br>
-  <button @click="signout"> signout</button>
-  <br>
-  <button @click="login(email, password)"> login</button>
+  <NuxtPage />
 </template>
