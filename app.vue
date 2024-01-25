@@ -61,10 +61,21 @@ const signout = async() => {
   }
 };
 
-const login = async (email: string, password: string) => {
+// const login = async(email: string, password: string) => {
+//   try {
+//     const response = await useLogin(email, password)
+//     console.log(response)
+//     user.value = response?.user
+//   } catch (error) {
+//     console.log(error)
+//   }
+// };
+
+const login = async(email: string, password: string) => {
   try {
-    const response = await useLogin(email, password)
-    console.log(response)
+    const {data, pending, status} = await useLogin(email, password)
+    user.value = data?.user
+    console.log(data.value.user)
   } catch (error) {
     console.log(error)
   }
