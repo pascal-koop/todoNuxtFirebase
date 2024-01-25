@@ -22,7 +22,7 @@ const login = async (email: string, password: string) => {
     <p class="form-subtitle">Sign in to continue</p>
     <form class="inner-form" @submit.prevent="login(email, password)">
       <label class="form-label" for="email">Email</label>
-      <input class="form-input" type="text" id="email" v-model="email" />
+      <input class="form-input" id="email" type="email" v-model="email" />
       <label class="form-label" for="password" type="password">Password</label>
       <input class="form-label" type="text" v-model="password" />
       <button class="submit-btn" type="submit">Login</button>
