@@ -1,12 +1,12 @@
 <script setup>
 
+
 </script>
 
 <style>
 </style>
 
 <template>
-  <div>
-
-  </div>
+  <NuxtLayout>
+  </NuxtLayout>
 </template>

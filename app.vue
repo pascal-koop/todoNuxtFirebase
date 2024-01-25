@@ -3,16 +3,15 @@ import type { Todo } from '~/types/todo';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
-const user = ref()
+const userid = ref();
+const user = ref();
 watchEffect(() => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log(('logged in'))
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      const uid = user.uid;
+      userid.value = user.uid;
+      navigateTo('/')
     } else {
-      console.log(('no user'))
+      userid.value = null;
     }
   });
 })
@@ -40,8 +39,6 @@ const addTodo = async(todo: Todo) => {
 const createNewUser = async(email: string, password: string) => {
   try {
     const response = await useCreateNewUser(email, password)
-    console.log(response)
-    user.value = response?.user
   } catch (error) {
     console.log(error)
   }
@@ -50,28 +47,19 @@ const createNewUser = async(email: string, password: string) => {
 const signout = async() => {
   try {
     const response = await useSignOut()
-    console.log('signout', response)
     // if (response) {
     //   navigateTo('/login')
     // }
-    user.value = null;
   } catch (error) {
 
     console.log(error)
   }
 };
 
-const login = async(email: string, password: string) => {
-  try {
-    const response = await useLogin(email, password)
-    console.log(response)
-    user.value = response?.user
-  } catch (error) {
-    console.log(error)
-  }
-};
+
 </script>
 
 <template>
   <NuxtPage />
+  <button @click="signout">signout</button>
 </template>
