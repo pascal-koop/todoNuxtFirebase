@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-const emits = defineEmits(['update:user'])
-let user = ref()
 let email = ref<string>('');
 let password = ref<string>('');
 
