@@ -4,18 +4,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
 const userid = ref();
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    userid.value = user.uid;
-    navigateTo('/')
-  } else {
-    userid.value = null;
-    navigateTo('/login')
-  }
-});
-
-
 let newTodo: Todo = {
 id: '1',
 title: 'new todo',
@@ -24,6 +12,21 @@ priority: 1,
 createdAt: new Date(),
 updatedAt: new Date(),
 };
+
+watchEffect(() => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      userid.value = user.uid;
+      navigateTo('/')
+    } else {
+      userid.value = null;
+      navigateTo('/login')
+    }
+  });
+
+})
+
+
 
 // const addTodo = async(todo: Todo) => {
 //  try {

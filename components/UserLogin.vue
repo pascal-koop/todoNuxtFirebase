@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
+
+watchEffect(() => {
+  useOnAuthStateChanged(auth);
+})
 
 let email = ref<string>('');
 let password = ref<string>('');
