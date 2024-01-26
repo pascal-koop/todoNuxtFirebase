@@ -2,6 +2,7 @@
   <nav class="navbar">
     <div class="navbar-logo">
       <NuxtLink to="/">Todo App</NuxtLink>
+      <LogoutButton/>
     </div>
     <div class="navbar__links">
       <NuxtLink to="/login">Login</NuxtLink>
