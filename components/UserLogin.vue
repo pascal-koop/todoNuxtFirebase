@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import { getAuth, type Auth, type UserCredential } from "firebase/auth";
+
+const auth: Auth = getAuth();
+
+watchEffect(() => {
+  useOnAuthStateChanged(auth);
+})
 
 let email = ref<string>('');
 let password = ref<string>('');
 
 const login = async (email: string, password: string) => {
   try {
-    const response = await useLogin(email, password)
-    console.log('login function',response)
+    const response: UserCredential | undefined = await useLogin(email, password)
   } catch (error) {
     console.log(error)
   }
@@ -23,8 +29,8 @@ const login = async (email: string, password: string) => {
     <form @submit.prevent="login(email, password)" class="inner-form">
       <label class="form-label" for="email">Email</label>
       <input v-model="email" class="form-input" id="email" type="email" autocomplete="autocomplete" />
-      <label class="form-label" for="password" type="password">Password</label>
-      <input v-model="password"  class="form-label" type="text" id="password" autocomplete="autocomplete" />
+      <label class="form-label" for="password">Password</label>
+      <input v-model="password"  class="form-label" id="password" type="password" autocomplete="autocomplete" />
       <button class="submit-btn" type="submit">Login</button>
     </form>
   </div>
