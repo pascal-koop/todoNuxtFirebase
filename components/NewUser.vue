@@ -27,4 +27,7 @@ const createNewUser = async(email: string, password: string) => {
       <button class="submit-btn" type="submit">Sign up</button>
     </form>
   </div>
+  <div>
+    <NuxtLink class="form-link" to="/login">Already have an account?</NuxtLink>
+  </div>
 </template>
