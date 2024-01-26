@@ -1,7 +1,7 @@
 import { addDoc, collection } from 'firebase/firestore';
 import type { Todo } from '~/types/todo';
-import { v4 as uuid } from 'uuid';
-const id = uuid();
+// import { v4 as uuid } from 'uuid';
+// const id = uuid();
 
 export const useAddTodo = async (todo: Todo) => {
   const db = useFirestore();
@@ -9,7 +9,6 @@ export const useAddTodo = async (todo: Todo) => {
     const ref = collection(db, 'todos');
     await addDoc(ref, {
       ...todo,
-      uuid: id,
     });
   } catch (error) {
     // eslint-disable-next-line no-console

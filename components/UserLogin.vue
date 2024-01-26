@@ -20,11 +20,11 @@ const login = async (email: string, password: string) => {
   <div class="outer-form">
     <h1 class="form-title">Welcome back</h1>
     <p class="form-subtitle">Sign in to continue</p>
-    <form class="inner-form" @submit.prevent="login(email, password)">
+    <form @submit.prevent="login(email, password)" class="inner-form">
       <label class="form-label" for="email">Email</label>
-      <input class="form-input" id="email" type="email" v-model="email" />
+      <input v-model="email" class="form-input" id="email" type="email" autocomplete="autocomplete" />
       <label class="form-label" for="password" type="password">Password</label>
-      <input class="form-label" type="text" v-model="password" />
+      <input v-model="password"  class="form-label" type="text" id="password" autocomplete="autocomplete" />
       <button class="submit-btn" type="submit">Login</button>
     </form>
   </div>
