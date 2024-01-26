@@ -28,4 +28,7 @@ const login = async (email: string, password: string) => {
       <button class="submit-btn" type="submit">Login</button>
     </form>
   </div>
+  <div>
+    <NuxtLink class="form-link" to="/register">Don't have an account?</NuxtLink>
+  </div>
 </template>
