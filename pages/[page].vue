@@ -10,12 +10,12 @@ onMounted(() => {
 </style>
 
 <template>
-
+  <NuxtLayout>
     <div v-if="page === 'login'">
       <UserLogin/>
     </div>
     <div v-else-if="page === 'register'">
       <NewUser/>
     </div>
-
+  </NuxtLayout>
 </template>
