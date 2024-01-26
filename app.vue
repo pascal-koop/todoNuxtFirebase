@@ -9,19 +9,6 @@ createdAt: new Date(),
 updatedAt: new Date(),
 };
 
-// watchEffect(() => {
-//   onAuthStateChanged(auth, (user) => {
-//     if (user) {
-//       userid.value = user.uid;
-//       navigateTo('/')
-//     } else {
-//       userid.value = null;
-//       navigateTo('/login')
-//     }
-//   });
-
-// })
-
 
 
 // const addTodo = async(todo: Todo) => {
@@ -31,19 +18,6 @@ updatedAt: new Date(),
 //    console.log(error)
 //  }
 // };
-
-  // const signout = async() => {
-  //   try {
-  //     const response = await useSignOut()
-  //     // if (response) {
-  //     //   navigateTo('/login')
-  //     // }
-  //   } catch (error) {
-
-  //     console.log(error)
-  //   }
-  // };
-
 </script>
 
 <template>
