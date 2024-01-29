@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-vuefire'],
+  modules: ['@nuxtjs/tailwindcss', 'nuxt-vuefire', '@pinia/nuxt'],
 
   vuefire: {
     config: {
