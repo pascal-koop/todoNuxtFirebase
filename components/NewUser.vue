@@ -8,13 +8,13 @@ watchEffect(() => {
   useOnAuthStateChanged(auth);
 })
 
-const createNewUser = (email: string, password: string) => {
-  try {
-     useCreateNewUser(email, password)
-  } catch (error) {
-    console.log(error)
-  }
-};
+// const createNewUser = (email: string, password: string) => {
+//   try {
+//      useCreateNewUser(email, password)
+//   } catch (error) {
+//     console.log(error)
+//   }
+// };
 </script>
 
 <style>
@@ -24,7 +24,7 @@ const createNewUser = (email: string, password: string) => {
   <div class="outer-form">
     <h1 class="form-title">Welcome!</h1>
     <p class="form-subtitle">Create a new account</p>
-    <form @submit.prevent="createNewUser(email, password)" class="inner-form">
+    <form @submit.prevent="" class="inner-form">
       <label class="form-label" for="email">Email</label>
       <input v-model="email" class="form-input" type="text" id="email" autocomplete="autocomplete" />
       <label class="form-label" for="password">Password</label>

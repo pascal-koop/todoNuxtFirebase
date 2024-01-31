@@ -1,22 +1,16 @@
 <script setup lang="ts">
-import { getAuth, type Auth, type UserCredential } from "firebase/auth";
+// import { getAuth, type Auth, type UserCredential } from "firebase/auth";
 
-const auth: Auth = getAuth();
+// const auth: Auth = getAuth();
 
-watchEffect(() => {
-  useOnAuthStateChanged(auth);
-})
-
+// watchEffect(() => {
+//   useOnAuthStateChanged(auth);
+// })
+import { useAuthStore } from '../stores/authStore'
+const authStore = useAuthStore();
 let email = ref<string>('');
 let password = ref<string>('');
 
-const login = async (email: string, password: string) => {
-  try {
-    const response: UserCredential | undefined = await useLogin(email, password)
-  } catch (error) {
-    console.log(error)
-  }
-};
 </script>
 
 <style>
@@ -26,7 +20,7 @@ const login = async (email: string, password: string) => {
   <div class="outer-form">
     <h1 class="form-title">Welcome back</h1>
     <p class="form-subtitle">Sign in to continue</p>
-    <form @submit.prevent="login(email, password)" class="inner-form">
+    <form @submit.prevent="authStore.login(email, password)" class="inner-form">
       <label class="form-label" for="email">Email</label>
       <input v-model="email" class="form-input" id="email" type="email" autocomplete="autocomplete" />
       <label class="form-label" for="password">Password</label>
