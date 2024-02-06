@@ -3,10 +3,6 @@ import { useAuthStore } from '../stores/authStore';
 
 const isUserLoggedIn = ref<boolean | undefined>(useAuthStore().isUserLoggedIn);
 
-// watchEffect(() => {
-//   useAuthStore().userLoginObserver();
-// });
-
 const signout = async() => {
   try {
     await useAuthStore().signOut();
