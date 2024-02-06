@@ -1,10 +1,18 @@
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, type User } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signOut,
+  type User,
+} from 'firebase/auth';
 
 export const useAuthStore = defineStore('auth', {
   // state: () => ({ user: null as User | null }),
   state: () => {
     return {
       user: null as User | null,
+      isUserLoggedIn: true,
     };
   },
   actions: {
@@ -12,10 +20,32 @@ export const useAuthStore = defineStore('auth', {
       const auth = getAuth();
       try {
         if (auth) {
-          const response = await signInWithEmailAndPassword(auth, email, password);
-          this.user = response.user;
-          console.log('User:', this.user);
-          return response;
+          await signInWithEmailAndPassword(auth, email, password);
+          navigateTo('/');
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      }
+    },
+    async createNewUser(email: string, password: string) {
+      const auth = getAuth();
+      try {
+        if (auth) {
+          await createUserWithEmailAndPassword(auth, email, password);
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      }
+    },
+    async signOut() {
+      const auth = getAuth();
+      try {
+        if (auth) {
+          navigateTo('/');
+          await signOut(auth);
+          return false;
         }
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -25,12 +55,14 @@ export const useAuthStore = defineStore('auth', {
     userLoginObserver() {
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
-        if (!user) {
+        if (user) {
+          this.user = user;
+          this.isUserLoggedIn = true;
+          navigateTo('/todos/overview');
+        } else {
           this.user = null;
-          navigateTo('/login');
+          this.isUserLoggedIn = false;
         }
-        this.user = user;
-        navigateTo('/');
       });
     },
   },

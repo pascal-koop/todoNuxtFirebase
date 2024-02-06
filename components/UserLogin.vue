@@ -4,7 +4,7 @@ import { useAuthStore } from '../stores/authStore';
 
 watchEffect( () => {
 useAuthStore().userLoginObserver();
-})
+});
 
 let email = ref<string>('');
 let password = ref<string>('');
