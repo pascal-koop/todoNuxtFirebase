@@ -3,16 +3,16 @@ import { getAuth, onAuthStateChanged, type Auth}  from "firebase/auth";
 const auth: Auth = getAuth();
 const isUserLoggedIn = ref<boolean>(true);
 
-watchEffect(() => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      navigateTo('/');
-    } else {
-      isUserLoggedIn.value = false;
-      navigateTo('/login');
-    }
-  });
-});
+// watchEffect(() => {
+//   onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//       navigateTo('/');
+//     } else {
+//       isUserLoggedIn.value = false;
+//       navigateTo('/login');
+//     }
+//   });
+// });
 
 const signout = async() => {
   try {

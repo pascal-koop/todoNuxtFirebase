@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { getAuth, type Auth } from "firebase/auth";
-const auth: Auth = getAuth();
+import { useAuthStore } from '../stores/authStore';
 const email = ref<string>('');
 const password = ref<string>('');
 
-watchEffect(() => {
-  useOnAuthStateChanged(auth);
+watchEffect( () => {
+useAuthStore().userLoginObserver();
 })
 
 const createNewUser = (email: string, password: string) => {

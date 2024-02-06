@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss', 'nuxt-vuefire', '@pinia/nuxt'],
-
+  ssr: false,
   vuefire: {
     config: {
       apiKey: process.env.NUXT_API_KEY,
