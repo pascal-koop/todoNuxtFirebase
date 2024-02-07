@@ -1,20 +1,19 @@
 <script setup lang="ts">
-import { getAuth, type Auth, type UserCredential } from "firebase/auth";
+import { getAuth, type Auth } from "firebase/auth";
+import { useAuthStore } from '../stores/authStore';
 
-const auth: Auth = getAuth();
-
-watchEffect(() => {
-  useOnAuthStateChanged(auth);
-})
+watchEffect( () => {
+useAuthStore().userLoginObserver();
+});
 
 let email = ref<string>('');
 let password = ref<string>('');
 
 const login = async (email: string, password: string) => {
   try {
-    const response: UserCredential | undefined = await useLogin(email, password)
+    await useAuthStore().login(email, password);
   } catch (error) {
-    console.log(error)
+    console.error(error);
   }
 };
 </script>

@@ -1,27 +1,13 @@
 <script setup lang='ts'>
-import { getAuth, onAuthStateChanged, type Auth}  from "firebase/auth";
-const auth: Auth = getAuth();
-const isUserLoggedIn = ref<boolean>(true);
+import { useAuthStore } from '../stores/authStore';
 
-watchEffect(() => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      navigateTo('/');
-    } else {
-      isUserLoggedIn.value = false;
-      navigateTo('/login');
-    }
-  });
-});
+const isUserLoggedIn = ref<boolean | undefined>(useAuthStore().isUserLoggedIn);
 
 const signout = async() => {
   try {
-    const response: boolean | undefined = await useSignOut()
-    if (response) {
-      navigateTo('/')
-    }
+    await useAuthStore().signOut();
   } catch (error) {
-    console.log(error)
+    console.error(error);
   }
 };
 </script>
@@ -30,7 +16,7 @@ const signout = async() => {
 </style>
 
 <template>
-  <div>
-     <button v-if="isUserLoggedIn" class="logout-btn" @click="signout">Sign out</button>
+  <div v-if="isUserLoggedIn">
+     <button class="logout-btn" @click="signout">Sign out</button>
   </div>
 </template>
