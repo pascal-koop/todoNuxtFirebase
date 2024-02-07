@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => {
     return {
       user: null as User | null,
-      isUserLoggedIn: true,
+      isUserLoggedIn: false,
     };
   },
   actions: {
