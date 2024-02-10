@@ -16,7 +16,13 @@ const signout = async() => {
 </style>
 
 <template>
-  <div v-if="isUserLoggedIn">
-     <button class="logout-btn" @click="signout">Sign out</button>
+  <div class="navbar-links">
+    <div v-if="isUserLoggedIn">
+      <button class="logout-btn" @click="signout">Sign out</button>
+    </div>
+    <div v-else>
+      <NuxtLink to="/login" class="navbar-link-item">Login</NuxtLink>
+      <NuxtLink to="/register" class="navbar-link-item">Register</NuxtLink>
+    </div>
   </div>
 </template>

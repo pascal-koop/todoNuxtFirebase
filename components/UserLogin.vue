@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { getAuth, type Auth } from "firebase/auth";
 import { useAuthStore } from '../stores/authStore';
 
 watchEffect( () => {
