@@ -4,5 +4,5 @@ export type Todo = {
   completed: boolean;
   createdAt: Date;
   updatedAt: Date;
-  priority: number | 1 | 2 | 3;
+  priority: 1 | 2 | 3;
 };

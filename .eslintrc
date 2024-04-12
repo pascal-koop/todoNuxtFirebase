@@ -23,8 +23,8 @@
       1,
       {
         "arrays": "never",
-        "objects": "always-multiline",
-        "imports": "never",
+        "objects": "always",
+        "imports": "always-multiline",
         "exports": "never",
         "functions": "never"
       }
