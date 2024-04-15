@@ -6,6 +6,7 @@ import {
   signOut,
   type User,
 } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 export const useAuthStore = defineStore('auth', {
   // state: () => ({ user: null as User | null }),
@@ -13,7 +14,11 @@ export const useAuthStore = defineStore('auth', {
     return {
       user: null as User | null,
       isUserLoggedIn: false,
+      userName: '',
     };
+    /* !TODO
+    - den username noch zum anzeigen implementieren.
+    */
   },
   actions: {
     async login(email: string, password: string) {
@@ -28,11 +33,20 @@ export const useAuthStore = defineStore('auth', {
         console.log(error);
       }
     },
-    async createNewUser(email: string, password: string) {
+    async createNewUser(name: string, email: string, password: string) {
       const auth = getAuth();
+      const db = useFirestore();
       try {
         if (auth) {
           await createUserWithEmailAndPassword(auth, email, password);
+          if (auth.currentUser) {
+            await setDoc(doc(db, 'users', auth.currentUser.uid), {
+              displayName: name,
+              email,
+              uid: auth.currentUser.uid,
+              createdAt: new Date().toISOString(),
+            });
+          }
         }
       } catch (error) {
         // eslint-disable-next-line no-console
