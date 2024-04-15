@@ -13,6 +13,7 @@ definePageMeta({
     <h1>Todos</h1>
     <div>
       <AddTodoForm />
+      <ShowTodos />
     </div>
   </div>
   </NuxtLayout>
