@@ -46,6 +46,7 @@ export const useAuthStore = defineStore('auth', {
               uid: auth.currentUser.uid,
               createdAt: new Date().toISOString(),
             });
+            this.userName = name;
           }
         }
       } catch (error) {
