@@ -12,7 +12,8 @@ definePageMeta({
   <div>
     <h1>Todos</h1>
     <div>
-      <!-- <NuxtLink to="/todos/new">Create new todo</NuxtLink> -->
+      <AddTodoForm />
+      <ShowTodos />
     </div>
   </div>
   </NuxtLayout>

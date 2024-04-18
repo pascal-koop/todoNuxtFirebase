@@ -2,7 +2,6 @@ import { addDoc, collection } from 'firebase/firestore';
 import type { Todo } from '~/types/todo';
 // import { v4 as uuid } from 'uuid';
 // const id = uuid();
-
 export const useAddTodo = async (todo: Todo) => {
   const db = useFirestore();
   try {
