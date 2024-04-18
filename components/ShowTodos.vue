@@ -3,9 +3,8 @@
   const store = useTodoStore()
   const todos = ref([])
 onMounted(async() => {
-  console.log('ShowTodos mounted')
   todos.value = await store.fetchTodos()
-  console.log(todos.value)
+  console.log(todos.value);
 })
 
 
