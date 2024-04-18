@@ -1,37 +1,70 @@
 <script setup lang="ts">
 import { useAuthStore } from '../stores/authStore';
+import * as z from 'zod';
+import { fromZodError } from 'zod-validation-error';
 
-const name = ref<string>('');
-const email = ref<string>('');
-const password = ref<string>('');
-
-watchEffect( () => {
-useAuthStore().userLoginObserver();
+const form = ref({
+  name: '',
+  email: '',
+  password: '',
 });
 
-const createNewUser =  async (name:string, email: string, password: string) => {
-  try {
-    await useAuthStore().createNewUser(name, email, password);
-  } catch (error) {
-    console.log(error);
+const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+const newUserSchema = z.object({
+  name: z
+    .string()
+    .min(3, { message: 'Name must be at least 3 characters long' })
+    .max(10, { message: 'Name must be less than 10 characters long' }),
+  email: z.string().email({ message: 'Invalid email address' }),
+  password: z.string().refine((value) => passwordRegex.test(value), {
+    message:
+      'Password must be at least 8 characters long, contain at least one uppercase letter, one number and one special character',
+  }),
+});
+
+type formSchema = z.infer<typeof newUserSchema>;
+
+const errors = ref<z.ZodFormattedError<formSchema> | null>(null);
+
+watchEffect(() => {
+  useAuthStore().userLoginObserver();
+});
+
+const submitNewUser = (name: string, email: string, password: string) => {
+  const validSchema = newUserSchema.safeParse(form.value);
+
+  if (!validSchema.success) {
+    errors.value = validSchema.error.format();
+  } else {
+    errors.value = null;
+    useAuthStore().createNewUser(name, email, password);
   }
 };
 </script>
 
-<style>
-</style>
+<style></style>
 
 <template>
   <div class="outer-form">
     <h1 class="form-title">Welcome!</h1>
     <p class="form-subtitle">Create a new account</p>
-    <form @submit.prevent="createNewUser(name, email, password)" class="inner-form">
+    <form @submit.prevent="submitNewUser(form.name, form.email, form.password)" class="inner-form">
       <label class="form-label" for="name">Select a Name</label>
-      <input v-model="name" class="form-input" type="text" id="name"/>
+      <input v-model="form.name" class="form-input" type="text" id="name" />
+      <div v-if="errors?.name">
+        <span v-for="error in errors?.name._errors">{{ error }}</span>
+      </div>
       <label class="form-label" for="email">Email</label>
-      <input v-model="email" class="form-input" type="email" id="email" autocomplete="autocomplete" />
+      <input v-model="form.email" class="form-input" type="email" id="email" autocomplete="autocomplete" />
+      <div v-if="errors?.email">
+        <span v-for="error in errors?.email._errors">{{ error }}</span>
+      </div>
       <label class="form-label" for="password">Password</label>
-      <input v-model="password" class="form-input" type="password" id="password" autocomplete="autocomplete" />
+      <input v-model="form.password" class="form-input" type="password" id="password" autocomplete="autocomplete" />
+      <div v-if="errors?.password">
+        <span v-for="error in errors?.password._errors">{{ error }}</span>
+      </div>
       <button class="submit-btn" type="submit">Sign up</button>
     </form>
   </div>
