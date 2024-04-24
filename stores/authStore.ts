@@ -29,8 +29,7 @@ export const useAuthStore = defineStore('auth', {
           navigateTo('/');
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error);
+        return (error as { code: string }).code;
       }
     },
     async createNewUser(name: string, email: string, password: string) {
@@ -50,8 +49,14 @@ export const useAuthStore = defineStore('auth', {
           }
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error);
+        if ((error as { code: string }).code) {
+          switch ((error as { code: string }).code) {
+            case 'auth/email-already-in-use':
+              return 'Email already in use, try another one';
+            default:
+              return 'Something went wrong, please try again';
+          }
+        }
       }
     },
     async signOut() {

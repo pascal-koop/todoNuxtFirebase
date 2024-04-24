@@ -8,11 +8,14 @@ useAuthStore().userLoginObserver();
 let email = ref<string>('');
 let password = ref<string>('');
 
+const authErrorMessage = ref<string>('');
+const isAuthError = ref<boolean>(false);
+
 const login = async (email: string, password: string) => {
-  try {
-    await useAuthStore().login(email, password);
-  } catch (error) {
-    console.error(error);
+  const result = await useAuthStore().login(email, password);
+  if (result === 'auth/invalid-credential') {
+    isAuthError.value = true;
+    authErrorMessage.value = ' Email or password is incorrect';
   }
 };
 </script>
@@ -29,6 +32,9 @@ const login = async (email: string, password: string) => {
       <input v-model="email" class="form-input" id="email" type="email" autocomplete="autocomplete" />
       <label class="form-label" for="password">Password</label>
       <input v-model="password"  class="form-label" id="password" type="password" autocomplete="autocomplete" />
+      <div v-if="isAuthError">
+        <span>{{ authErrorMessage }}</span>
+      </div>
       <button class="submit-btn" type="submit">Login</button>
     </form>
   </div>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useAuthStore } from '../stores/authStore';
 import * as z from 'zod';
-import { fromZodError } from 'zod-validation-error';
 
+const emailErrorMessage = ref('');
+const isSomethingWrongWithEmail = ref(false);
 const form = ref({
   name: '',
   email: '',
@@ -15,7 +16,7 @@ const newUserSchema = z.object({
   name: z
     .string()
     .min(3, { message: 'Name must be at least 3 characters long' })
-    .max(10, { message: 'Name must be less than 10 characters long' }),
+    .max(15, { message: 'Name must be less than 15 characters long' }),
   email: z.string().email({ message: 'Invalid email address' }),
   password: z.string().refine((value) => passwordRegex.test(value), {
     message:
@@ -31,14 +32,18 @@ watchEffect(() => {
   useAuthStore().userLoginObserver();
 });
 
-const submitNewUser = (name: string, email: string, password: string) => {
+const submitNewUser = async (name: string, email: string, password: string) => {
   const validSchema = newUserSchema.safeParse(form.value);
 
   if (!validSchema.success) {
     errors.value = validSchema.error.format();
   } else {
     errors.value = null;
-    useAuthStore().createNewUser(name, email, password);
+    const result = await useAuthStore().createNewUser(name, email, password);
+    if (result) {
+      isSomethingWrongWithEmail.value = true;
+      emailErrorMessage.value = result;
+    }
   }
 };
 </script>
@@ -66,6 +71,9 @@ const submitNewUser = (name: string, email: string, password: string) => {
         <span v-for="error in errors?.password._errors">{{ error }}</span>
       </div>
       <button class="submit-btn" type="submit">Sign up</button>
+      <div v-if="isSomethingWrongWithEmail">
+        <span>{{ emailErrorMessage }}</span>
+      </div>
     </form>
   </div>
   <div>
